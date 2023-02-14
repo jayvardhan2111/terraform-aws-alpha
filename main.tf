@@ -8,7 +8,6 @@ resource "aws_vpc" "main" {
 
 
 # Public subnets 
-
 resource "aws_subnet" "public" {
 
   count = length(var.public_cidr)
@@ -23,7 +22,6 @@ resource "aws_subnet" "public" {
 
 
 # Private subnets
-
 resource "aws_subnet" "private" {
   count = length(var.private_cidr)
   vpc_id            = aws_vpc.main.id
@@ -37,7 +35,6 @@ resource "aws_subnet" "private" {
 
 
 # Internet Gateway
-
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
 
@@ -45,7 +42,6 @@ resource "aws_internet_gateway" "main" {
 
 
 # Route  Table 
-
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
 
@@ -59,7 +55,6 @@ resource "aws_route_table" "public" {
 }
 
 # Route Association 
-
 resource "aws_route_table_association" "public" {
   count = length(var.public_cidr)
   subnet_id      = aws_subnet.public[count.index].id
@@ -85,7 +80,6 @@ resource "aws_nat_gateway" "nat" {
 
 
 # Private Route table
-
 
 resource "aws_route_table" "private" {
   count = length(var.private_cidr)

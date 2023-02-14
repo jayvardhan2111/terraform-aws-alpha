@@ -72,3 +72,4 @@ resource "aws_instance" "private" {
   vpc_security_group_ids = [aws_security_group.private.id]
   subnet_id              = aws_subnet.private[0].id
 }
+

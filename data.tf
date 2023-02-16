@@ -16,3 +16,4 @@ data "aws_ami" "amazonlinux" {
 data "aws_availability_zones" "available" {
   state = "available"
 }
+

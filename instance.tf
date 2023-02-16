@@ -5,8 +5,8 @@ resource "aws_security_group" "public" {
 
   ingress {
     description = "SSH from public"
-    from_port   = 22
-    to_port     = 22
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["${var.my_public_ip}/32"]
 
@@ -30,6 +30,7 @@ resource "aws_instance" "public" {
   instance_type               = "t2.micro"
   associate_public_ip_address = true
   key_name                    = "awskey"
+  user_data                   = file("user_data.sh")
   vpc_security_group_ids      = [aws_security_group.public.id]
   subnet_id                   = aws_subnet.public[0].id
 }

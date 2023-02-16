@@ -8,6 +8,8 @@ availability_zones = ["ap-south-1a", "ap-south-1b"]
 
 my_public_ip = "106.76.240.2"
 
-env_code = "Mumbail"
+env_code = "Mumbai"
+
+region = "ap-south-1"
 
 

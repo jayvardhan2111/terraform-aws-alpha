@@ -26,7 +26,7 @@ resource "aws_security_group" "public" {
 }
 
 resource "aws_instance" "public" {
-  ami                         = "ami-0f8ca728008ff5af4" # ap-south-1
+  ami                         = data.aws_ami.amazonlinux.id # ap-south-1
   instance_type               = "t2.micro"
   associate_public_ip_address = true
   key_name                    = "awskey"
@@ -50,11 +50,11 @@ resource "aws_security_group" "private" {
   }
 
   egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+
   }
 
   tags = {
@@ -65,7 +65,7 @@ resource "aws_security_group" "private" {
 
 
 resource "aws_instance" "private" {
-  ami           = "ami-0f8ca728008ff5af4" # ap-south-1
+  ami           = data.aws_ami.amazonlinux.id # ap-south-1
   instance_type = "t2.micro"
   key_name      = "awskey"
 

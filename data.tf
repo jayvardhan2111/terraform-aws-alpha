@@ -4,7 +4,7 @@ data "aws_ami" "amazonlinux" {
   filter {
     name   = "name"
     values = ["amzn2-ami-kernel-*"]
-    }
+  }
 
   filter {
     name   = "virtualization-type"

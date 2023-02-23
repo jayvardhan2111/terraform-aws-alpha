@@ -6,7 +6,7 @@ private_cidr = ["10.0.2.0/24", "10.0.3.0/24"]
 
 availability_zones = ["ap-south-1a", "ap-south-1b"]
 
-my_public_ip = "106.77.142.1"
+my_public_ip = "1.187.84.81"
 
 env_code = "Mumbai"
 

@@ -20,6 +20,8 @@ resource "aws_security_group" "public" {
 
   }
 
+ 
+
   egress {
     from_port        = 0
     to_port          = 0
@@ -35,18 +37,18 @@ resource "aws_security_group" "public" {
 
 resource "aws_instance" "public" {
 
-  count = 2
+  
 
   ami                         = data.aws_ami.amazonlinux.id # ap-south-1
   instance_type               = "t2.micro"
   associate_public_ip_address = true
   key_name                    = "awskey"
-  user_data                   = file("user_data.sh")
+   user_data                   = file("user_data.sh")
   vpc_security_group_ids      = [aws_security_group.public.id]
-  subnet_id                   = data.terraform_remote_state.level1.outputs.public_subnet_ids[count.index]
+  subnet_id                   = data.terraform_remote_state.level1.outputs.public_subnet_ids[0]
 
   tags = {
-    Name = "${var.env_code}-public${count.index}"
+    Name = "${var.env_code}-public"
   }
 
 
@@ -66,6 +68,15 @@ resource "aws_security_group" "private" {
 
   }
 
+
+  ingress {
+    description     = "HTTP fro load balancer"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.load_balancer.id]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -82,11 +93,11 @@ resource "aws_security_group" "private" {
 
 
 resource "aws_instance" "private" {
-  count = 2
+  count         = 2
   ami           = data.aws_ami.amazonlinux.id # ap-south-1
   instance_type = "t2.micro"
   key_name      = "awskey"
-
+  user_data                   = file("user_data.sh")
   vpc_security_group_ids = [aws_security_group.private.id]
   subnet_id              = data.terraform_remote_state.level1.outputs.private_subnet_ids[count.index]
   tags = {

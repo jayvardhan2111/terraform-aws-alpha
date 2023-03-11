@@ -6,6 +6,7 @@ resource "aws_launch_configuration" "main" {
   key_name = "awskey"
   user_data = file("user_data.sh")
   security_groups = [aws_security_group.private.id]
+  iam_instance_profile = aws_iam_instance_profile.main.name
 
 }
 

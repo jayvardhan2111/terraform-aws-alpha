@@ -1,9 +1,7 @@
 resource "aws_iam_policy" "s3_policy" {
   name        = var.env_code
   path        = "/"
-
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
+  
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -41,3 +39,10 @@ resource "aws_iam_instance_profile" "main" {
   name = var.env_code
   role = aws_iam_role.main.name
 }
+
+resource "aws_iam_role_policy_attachment" "test-attach" {
+  role       = aws_iam_role.s3Role.name
+  policy_arn = aws_iam_policy.s3-FullAcess-policy.arn
+}
+
+
